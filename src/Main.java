@@ -93,7 +93,7 @@ public class Main {
             // this allows the while loop to restart
             if (input.equals("no")) {
                 System.out.println("Thank you for your participation.");
-                System.exit(0);
+                System.exit(13);
                 // It ends the programme
             }
             else System.out.println("Please input a valid input");
@@ -310,7 +310,7 @@ public class Main {
             quizWriteSection(christmasQuestions,writer);
         }
         System.out.println("Your file has been created. Thank you for your participation!");
-        System.exit(0);
+        System.exit(13);
         //this exits the programme
     }
     private static void quizWriteSection(String[][] questions, PrintStream writer){
