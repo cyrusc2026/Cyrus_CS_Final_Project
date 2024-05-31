@@ -206,6 +206,7 @@ public class Main {
         }
         if (christmasQuestions.length > 0) {
             System.out.println("Christmas:\n");
+            score = quizSection(christmasQuestions,scanner,score);
         }
         return score;
     }
