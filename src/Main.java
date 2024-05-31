@@ -190,27 +190,22 @@ public class Main {
         if (sportsQuestions.length > 0) {
             System.out.println("Sports:\n");
             score = quizSection(sportsQuestions,scanner,score);
-            System.out.println("Round score: "+score);
             //this checks if the section exists, and it runs the individual section as a separate nested method
         }
         if (entertainmentQuestions.length > 0) {
             System.out.println("Entertainment:\n");
             score = quizSection(entertainmentQuestions,scanner,score);
-            System.out.println("Round score: "+score);
         }
         if (worldQuestions.length > 0) {
             System.out.println("World:\n");
             score = quizSection(worldQuestions,scanner,score);
-            System.out.println("Round score: "+score);
         }
         if (scienceQuestions.length > 0) {
             System.out.println("Science:\n");
             score = quizSection(scienceQuestions,scanner,score);
-            System.out.println("Round score: "+score);
         }
         if (christmasQuestions.length > 0) {
             System.out.println("Christmas:\n");
-            score = quizSection(christmasQuestions,scanner,score);
         }
         return score;
     }
