@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
+        System.out.println("Welcome to the random multiple choice quiz generator!\n");
         File sportsFile = new File("src/Sports Question Bank - Sheet1.csv");
         File entertainmentFile = new File("src/Entertainment Question Bank - Sheet1.csv");
         File worldFile = new File("src/World Question Bank - Sheet1.csv");
@@ -50,6 +51,7 @@ public class Main {
             scienceInput = questionNumberInput(scienceQCount, scienceInput, scanner);
             System.out.println("How many questions do you want for the Christmas category?");
             christmasInput = questionNumberInput(christmasQCount, christmasInput, scanner);
+            int totalQuestionInput = sportsInput+entertainmentInput+worldInput+scienceInput+christmasInput;
             String[][] sportsChosenQuestions = new String[sportsInput][6];
             String[][] entertainmentChosenQuestions = new String[entertainmentInput][6];
             String[][] worldChosenQuestions = new String[worldInput][6];
@@ -64,8 +66,10 @@ public class Main {
             //randomises the questions and stores them into the chosenQuestions 2D array
             boolean testQuiz = testQuiz(scanner);
             //checks to see if the user would like to try out the quiz
-            if (testQuiz)
-                quiz(sportsChosenQuestions, entertainmentChosenQuestions, worldChosenQuestions, scienceChosenQuestions, christmasChosenQuestions, scanner);
+            if (testQuiz) {
+                int score = quiz(sportsChosenQuestions, entertainmentChosenQuestions, worldChosenQuestions, scienceChosenQuestions, christmasChosenQuestions, scanner);
+                System.out.println("Your score is "+score+"/"+totalQuestionInput+".");
+            }
             //if the user wants to test the quiz, it will run the quiz method
             else
                 printQuiz(sportsChosenQuestions, entertainmentChosenQuestions, worldChosenQuestions, scienceChosenQuestions, christmasChosenQuestions);
@@ -113,7 +117,7 @@ public class Main {
         String[] temp = new String[count];
         for (int i = 0; i < count; i++) {
             temp[i] = scan.nextLine();
-            //it first extracts all the data from the file and stores each line as a index in a 1D array
+            //it first extracts all the data from the file and stores each line as an index in a 1D array
         }
         for (int i = 0; i < count; i++) {
             String[] temparr = temp[i].split(",");
@@ -179,32 +183,38 @@ public class Main {
         //the while loop runs again if the user didn't input yes or no
         }
     }
-    private static void quiz (String[][] sportsQuestions, String[][] entertainmentQuestions, String[][] worldQuestions, String[][] scienceQuestions, String[][] christmasQuestions, Scanner scanner){
+    private static int quiz (String[][] sportsQuestions, String[][] entertainmentQuestions, String[][] worldQuestions, String[][] scienceQuestions, String[][] christmasQuestions, Scanner scanner){
         System.out.println("Your Multiple Choice Quiz:\n\n");
+        int score = 0;
         System.out.println("Input in either 'A', 'B', 'C'. or 'D' when answering");
         if (sportsQuestions.length > 0) {
             System.out.println("Sports:\n");
-            quizSection(sportsQuestions,scanner);
+            score = quizSection(sportsQuestions,scanner,score);
+            System.out.println("Round score: "+score);
             //this checks if the section exists, and it runs the individual section as a separate nested method
         }
         if (entertainmentQuestions.length > 0) {
             System.out.println("Entertainment:\n");
-            quizSection(entertainmentQuestions,scanner);
+            score = quizSection(entertainmentQuestions,scanner,score);
+            System.out.println("Round score: "+score);
         }
         if (worldQuestions.length > 0) {
             System.out.println("World:\n");
-            quizSection(worldQuestions,scanner);
+            score = quizSection(worldQuestions,scanner,score);
+            System.out.println("Round score: "+score);
         }
         if (scienceQuestions.length > 0) {
             System.out.println("Science:\n");
-            quizSection(scienceQuestions,scanner);
+            score = quizSection(scienceQuestions,scanner,score);
+            System.out.println("Round score: "+score);
         }
         if (christmasQuestions.length > 0) {
             System.out.println("Christmas:\n");
-            quizSection(christmasQuestions,scanner);
+            score = quizSection(christmasQuestions,scanner,score);
         }
+        return score;
     }
-    private static void quizSection (String[][] questions, Scanner scanner) {
+    private static int quizSection (String[][] questions, Scanner scanner, int score) {
         for (int i = 0; i < questions.length; i++) {
             System.out.println("Question " + (i+1) + ":");
             System.out.println(questions[i][0]);
@@ -223,13 +233,17 @@ public class Main {
                 }
                 else System.out.println("Please input a valid answer.");
             }
-            if (userInput.equals(questions[i][5])) System.out.println("You are correct!");
+            if (userInput.equals(questions[i][5])) {
+                System.out.println("You are correct!");
+                score++;
+            }
             //checks if the user's answer is correct
             else System.out.println("You are incorrect. The correct answer was " + questions[i][5] + ".");
             //tells the user the correct answer
 
         }
         System.out.println("\n\n");
+        return score;
     }
     private static void printQuiz(String[][] sportsQuestions, String[][] entertainmentQuestions, String[][] worldQuestions, String[][] scienceQuestions, String[][] christmasQuestions){
         System.out.println("Your Multiple Choice Quiz:\n");
@@ -256,7 +270,7 @@ public class Main {
         }
     }
     private static void quizPrintSection(String[][] questions){
-        //this is an individual section used to print out each section in order to simplify the cose
+        //this is an individual section used to print out each section in order to simplify the code
         for (int i = 0; i < questions.length; i++) {
             System.out.println("Question " + (i + 1) + ":");
             System.out.println(questions[i][0]);
